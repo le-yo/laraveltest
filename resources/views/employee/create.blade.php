@@ -16,7 +16,18 @@
                 @endif
                 <form method="post" action="{{ route('employee.store') }}">
                     @csrf
+
+                    <label for="first_name">Select Company:</label>
+                    <select class="form-control" name="company_id">
+                        <option>Select Company</option>
+                        @foreach ($companies as $key => $value)
+                            <option value="{{ $key }}" {{ ( $key == $selectedCompany) ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
+                    </select>
                     <div class="form-group">
+
                         <label for="first_name">First Name:</label>
                         <input type="text" class="form-control" name="first_name"/>
                     </div>

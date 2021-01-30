@@ -29,7 +29,9 @@ class EmployeeController extends Controller
     public function create()
     {
         //
-        return view('employee.create');
+        $companies = Company::pluck('name', 'id');
+        $selectedCompany = 1;
+        return view('employee.create',compact('selectedCompany', 'companies'));
     }
 
     /**
@@ -44,22 +46,14 @@ class EmployeeController extends Controller
         $request->validate([
             'first_name'=>'required',
             'last_name'=>'required',
-
-
-
-
+            'company_id'=>'required',
         ]);
-        $company = Company::find(1);
-        if ($company){
-            $id = $company->id;
-        }
-        $id = 1;
         $employee = new Employee([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
-            'company_id' => $company->id,
+            'company_id' => $request->get('company_id'),
 
         ]);
         $employee->save();
